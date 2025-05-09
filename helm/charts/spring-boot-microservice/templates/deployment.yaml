@@ -3,22 +3,20 @@ kind: Deployment
 metadata:
   name: {{ include "spring-boot-microservice.fullname" . }}
   labels:
-    app: {{ include "spring-boot-microservice.name" . }}
-    chart: {{ include "spring-boot-microservice.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "spring-boot-microservice.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount | default 1 }}
   selector:
     matchLabels:
-      app: {{ include "spring-boot-microservice.name" . }}
-      release: {{ .Release.Name }}
+      {{- include "spring-boot-microservice.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: {{ include "spring-boot-microservice.name" . }}
-        release: {{ .Release.Name }}
+        {{- include "spring-boot-microservice.selectorLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.podSecurityContext }}
+      securityContext: {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -29,6 +27,11 @@ spec:
             {{- with .Values.env }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
+          {{- if .Values.secretName }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.secretName }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           livenessProbe:
@@ -43,14 +46,23 @@ spec:
               port: {{ .Values.service.port | default 8080 }}
             initialDelaySeconds: 10
             periodSeconds: 5
+          {{- if .Values.logVolume.enabled }}
           volumeMounts:
-            {{- if .Values.configMapName }}
-            - name: config
-              mountPath: /config
-            {{- end }}
+            - name: log-volume
+              mountPath: /logs
+          {{- end }}
+      {{- if .Values.logVolume.enabled }}
       volumes:
-        {{- if .Values.configMapName }}
-        - name: config
-          configMap:
-            name: {{ .Values.configMapName }}
-        {{- end }}
+        - name: log-volume
+          persistentVolumeClaim:
+            claimName: {{ .Values.serviceName }}-log-pvc
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector: {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity: {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations: {{- toYaml . | nindent 8 }}
+      {{- end }}

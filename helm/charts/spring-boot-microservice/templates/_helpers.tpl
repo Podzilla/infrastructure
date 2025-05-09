@@ -1,6 +1,5 @@
 {{/*
-Common labels that are applied to all resources managed by this chart.
-Uses the serviceName value for the app.kubernetes.io/name label.
+Common labels for all resources.
 */}}
 {{- define "spring-boot-microservice.labels" -}}
 helm.sh/chart: {{ include "spring-boot-microservice.chart" . }}
@@ -9,37 +8,35 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
 {{/*
-Selector labels that are used by Deployments and Services to select matching Pods.
-Uses the serviceName value for the app.kubernetes.io/name label.
-Uses the Helm release name for app.kubernetes.io/instance to help isolate different installations.
+Selector labels for Deployments and Services.
 */}}
 {{- define "spring-boot-microservice.selectorLabels" -}}
-app.kubernetes.io/name: {{ .Values.serviceName | required ".Values.serviceName is required" }} # Ensure serviceName is provided
+app.kubernetes.io/name: {{ .Values.serviceName | required ".Values.serviceName is required" }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
 {{/*
-Create chart name and version as used by the chart label.
+Chart name and version for labels.
 */}}
 {{- define "spring-boot-microservice.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 -}}
 {{- end -}}
 
 {{/*
-Expand the name of the chart. Used for app and selector labels.
+Expand the name of the chart.
 */}}
 {{- define "spring-boot-microservice.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
-Expand the name of the chart. Used as a base name in some templates.
+Full name for resources.
 */}}
 {{- define "spring-boot-microservice.fullname" -}}
 {{- if .Values.fullnameOverride -}}
 {{- .Values.fullnameOverride | trunc 63 -}}
 {{- else -}}
-{{- $name := default .Chart.Name .Values.serviceName -}} # Use serviceName as a base
+{{- $name := default .Chart.Name .Values.serviceName -}}
 {{- if contains $name .Release.Name -}}
 {{- .Release.Name | trunc 63 -}}
 {{- else -}}

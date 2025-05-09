@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.serviceName }}-service # Consistent Service naming
+  name: {{ .Values.serviceName }}-service
   labels:
     {{- include "spring-boot-microservice.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }} # Use Service type from values (ClusterIP by default)
+  type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }} # Service port from values
-      targetPort: {{ .Values.service.port }} # Target port (container port) from values
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
       protocol: TCP
-      name: http # Consistent port name
+      name: http
   selector:
-    {{- include "spring-boot-microservice.selectorLabels" . | nindent 8 }} # Select pods by service name and release
+    {{- include "spring-boot-microservice.selectorLabels" . | nindent 8 }}
