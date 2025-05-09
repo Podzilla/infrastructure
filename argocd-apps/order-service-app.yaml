@@ -8,10 +8,10 @@ spec:
   source:
     repoURL: https://github.com/Podzilla/infrastructure
     targetRevision: main
-    path: helm
+    path: helm/charts/spring-boot-microservice
     helm:
       valueFiles:
-        - values/order-service-values.yaml
+        - ../../values/auth-service-values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: dev
