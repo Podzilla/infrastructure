@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Values.serviceName }}-log-pvc
+  name: {{ include "spring-boot-microservice.fullname" . }}-log-pvc
   labels:
     {{- include "spring-boot-microservice.labels" . | nindent 4 }}
 spec:
