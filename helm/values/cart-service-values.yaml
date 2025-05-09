@@ -3,7 +3,7 @@ serviceName: cart
 replicaCount: 1
 
 image:
-  repository: your-registry/cart-backend # <-- REPLACE with your actual Auth service image location
+  repository: nourwk/cart
   tag: v1.0.0
 
 service:

@@ -4,7 +4,7 @@ serviceName: erp
 replicaCount: 1
 
 image:
-  repository: your-registry/erp-backend # <-- REPLACE with your actual Auth service image location
+  repository: nourwk/erp
   tag: v1.0.0
 
 service:

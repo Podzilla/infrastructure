@@ -4,7 +4,7 @@ serviceName: order
 replicaCount: 1
 
 image:
-  repository: your-registry/order-backend # <-- REPLACE with your actual Auth service image location
+  repository: nourwk/order
   tag: v1.0.0
 
 service:

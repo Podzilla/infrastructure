@@ -4,7 +4,7 @@ serviceName: auth
 replicaCount: 2
 
 image:
-  repository: your-registry/auth-backend # <-- REPLACE with your actual Auth service image location
+  repository: nourwk/auth
   tag: v1.0.0
 
 service:

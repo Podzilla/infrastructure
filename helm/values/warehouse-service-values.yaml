@@ -4,7 +4,7 @@ serviceName: warehouse
 replicaCount: 1
 
 image:
-  repository: your-registry/warehouse-backend # <-- REPLACE with your actual Auth service image location
+  repository: nourwk/warehouse
   tag: v1.0.0
 
 service:
