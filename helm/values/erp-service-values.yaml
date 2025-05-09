@@ -1,0 +1,29 @@
+
+serviceName: erp
+
+replicaCount: 1
+
+image:
+  repository: your-registry/erp-backend # <-- REPLACE with your actual Auth service image location
+  tag: v1.0.0
+
+service:
+  port: 8083
+  type: ClusterIP
+
+env:
+  - name: SPRING_DATASOURCE_URL
+    value: jdbc:postgresql://psql-db:5432/erpDB
+
+secretName: erp-secrets
+logVolume:
+  enabled: true
+  size: 1Gi
+
+resources:
+  requests:
+    cpu: 150m
+    memory: 200Mi
+  limits:
+    cpu: 300m
+    memory: 400Mi

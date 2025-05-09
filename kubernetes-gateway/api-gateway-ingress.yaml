@@ -1,103 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: microservice-api-gateway
-  namespace: your-microservices-namespace # <-- Set your target namespace
+  name: api-gateway-ingress
+  namespace: dev
   annotations:
-    # --- IMPORTANT: Configure annotations specific to YOUR Ingress Controller ---
-    # Replace or add annotations based on the Ingress Controller you are using (e.g., Nginx, Traefik, GCE, AWS ALB)
-
-    # Example for Nginx Ingress Controller:
-    # kubernetes.io/ingress.class: nginx # Specify the ingress class if you have multiple controllers
-    # nginx.ingress.kubernetes.io/ssl-redirect: "true" # Optional: Redirect HTTP to HTTPS
-
-    # If your backend services expect paths *without* the prefix (e.g., /auth/users -> /users):
-    # nginx.ingress.kubernetes.io/rewrite-target: /$2 # <-- Add this ONLY if using Nginx and needing rewrite
-
-    # Example for Google Cloud (GCE) Ingress:
-    # networking.gke.io/managed-certificates: my-cert-resource # Link to a ManagedCertificate resource
-    # kubernetes.io/ingress.global-static-ip-name: my-static-ip # Use a static global IP
-
-    # Example for AWS ALB Ingress Controller:
-    # alb.ingress.kubernetes.io/scheme: internet-facing # or internal
-    # alb.ingress.kubernetes.io/target-type: ip # or instance
-    # alb.ingress.kubernetes.io/group.name: my-alb-group # Group multiple ingresses behind one ALB
-
-    # Example annotation for cert-manager to automatically get a TLS certificate
-    # cert-manager.io/cluster-issuer: letsencrypt-prod # Replace with your issuer name
-
-    # Add any other necessary annotations here...
-    {} # Keep this if no annotations are needed (unlikely for a real setup)
-
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  # ingressClassName: nginx # Optional: Alternative way to specify Ingress Class (Kubernetes 1.18+)
-
-  # tls: # Optional: Configure TLS for HTTPS
-  # - hosts:
-  #   - api.your-domain.com # <-- Replace with your actual API domain
-  #   secretName: api-tls-cert # <-- K8s Secret containing the TLS certificate (manual or cert-manager)
-
   rules:
-    # --- Routing Rules ---
-    # Define how paths or hosts are routed to internal services
-
-    # Example using a specific hostname (recommended for production)
-    - host: api.your-domain.com # <-- Replace with your actual API domain (or remove if not using hostnames)
+    - host: podzilla.dev.com
       http:
         paths:
-          # Auth Service
-          - path: /auth # Standard path prefix match
-            pathType: Prefix # Matches /auth, /auth/, /auth/users, etc.
-            backend:
-              service:
-                name: auth-service # Route to the auth-service (ClusterIP Service name)
-                port:
-                  number: 8080 # Route to the Service's port (matches container's targetPort)
-
-          # Order Service
-          - path: /order # Standard path prefix match
+          - path: /
             pathType: Prefix
             backend:
               service:
-                name: order-service # Route to the order-service (ClusterIP Service name)
+                name: api-gateway
                 port:
-                  number: 8080
-
-          # Cart Service
-          - path: /cart # Standard path prefix match
-            pathType: Prefix
-            backend:
-              service:
-                name: cart-service # Route to the cart-service (ClusterIP Service name)
-                port:
-                  number: 8080
-
-          # --- Add rules for erp, warehouse, courier, etc. here ---
-          # Example for ERP Service:
-          # - path: /erp
-          #   pathType: Prefix
-          #   backend:
-          #     service:
-          #       name: erp-service
-          #       port:
-          #         number: 8080
-
-    # # Example using no host (less common for multi-service, but works)
-    # # Traffic hits the default Ingress IP/hostname and is routed by path
-    # - http:
-    #     paths:
-    #       - path: /auth
-    #         pathType: Prefix
-    #         backend:
-    #           service:
-    #             name: auth-service
-    #             port:
-    #               number: 8080
-    #       # ... other paths ...
-
-
-  # defaultBackend: # Optional: Define a default backend for requests that don't match any rules
-  #   service:
-  #     name: default-backend-service # Replace with the name of your default service (e.g., a 404 server)
-  #     port:
-  #       number: 80
+                  number: 80

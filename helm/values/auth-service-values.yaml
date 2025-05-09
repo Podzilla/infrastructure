@@ -1,45 +1,32 @@
-# Specific values for the Auth microservice, overriding defaults in spring-boot-microservice/values.yaml
 
-serviceName: auth # Unique name for this service
+serviceName: auth
 
-replicaCount: 2 # Example: Run 2 replicas of the auth service
+replicaCount: 2
 
 image:
   repository: your-registry/auth-backend # <-- REPLACE with your actual Auth service image location
-  tag: v1.0.0 # <-- REPLACE with the specific version tag you want to deploy
+  tag: v1.0.0
 
 service:
   port: 8080
-  type: ClusterIP # Typically ClusterIP when used with Ingress
+  type: ClusterIP
 
 env:
-  # Non-sensitive environment variables specific to the auth service
-  # These will be injected from the 'env' list in the chart template
   - name: SPRING_DATASOURCE_URL
-    value: jdbc:postgresql://auth-db-service:5432/authDB # Connects to the auth-db K8s Service
+    value: jdbc:postgresql://psql-db-service:5432/authDB
   - name: SPRING_DATA_REDIS_HOST
-    value: redis-cache-service # Connects to the redis-cache K8s Service
-  # Add other non-sensitive Auth-specific vars here
+    value: redis-cache-service
 
-secretName: auth-secrets # <-- The name of the K8s Secret containing Auth's sensitive env vars.
-  #     This K8s Secret MUST exist BEFORE deploying this chart.
-#     (See kubernetes-secrets/README.md)
+secretName: auth-secrets
 
 logVolume:
   enabled: true
   size: 1Gi
 
-resources: # Example resource requests/limits for auth
+resources:
   requests:
     cpu: 150m
     memory: 200Mi
   limits:
     cpu: 300m
     memory: 400Mi
-
-# nodeSelector: {} # Uncomment and configure if needed
-# affinity: {} # Uncomment and configure if needed
-# tolerations: [] # Uncomment and configure if needed
-
-# podSecurityContext: {} # Uncomment and configure if needed
-# securityContext: {} # Uncomment and configure if needed

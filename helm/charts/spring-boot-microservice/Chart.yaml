@@ -9,7 +9,7 @@ keywords:
   - microservice
   - java
 sources:
-  - https://github.com/YOUR_ORG/infrastructure # Link to your infra repo (optional)
+  - https://github.com/Podzilla/infrastructure # Link to your infra repo (optional)
 # dependencies: # Add dependencies for things like external databases or Redis charts if needed
 #   - name: postgresql
 #     version: 12.x.x
