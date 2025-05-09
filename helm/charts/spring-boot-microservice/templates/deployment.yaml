@@ -37,12 +37,20 @@ spec:
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- if eq .Values.serviceName "psql" }}
+          livenessProbe:
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          {{- else }}
           livenessProbe:
             httpGet:
               path: /actuator/health
               port: {{ .Values.service.port | default 8080 }}
             initialDelaySeconds: 30
             periodSeconds: 10
+          {{- end }}
           {{- if eq .Values.serviceName "psql" }}
           readinessProbe:
             tcpSocket:
