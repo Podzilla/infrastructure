@@ -5,7 +5,7 @@ replicaCount: 2
 
 image:
   repository: nourwk/auth
-  tag: v1.0.0
+  tag: v1.0.1
 
 service:
   port: 8086
