@@ -49,6 +49,38 @@ kubectl create secret generic courier-secrets `
   --dry-run=client -o yaml |
 kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/courier-sealed-secret.yaml
 
+kubectl create secret generic mongo-secrets `
+  --from-literal=CART_MONGO_USERNAME="$env:CART_MONGO_USERNAME" `
+  --from-literal=CART_MONGO_PASSWORD="$env:CART_MONGO_PASSWORD" `
+  --from-literal=CART_MONGO_DB="$env:CART_MONGO_DB" `
+  --from-literal=COURIER_MONGO_USERNAME="$env:COURIER_MONGO_USERNAME" `
+  --from-literal=COURIER_MONGO_PASSWORD="$env:COURIER_MONGO_PASSWORD" `
+  --from-literal=COURIER_MONGO_DB="$env:COURIER_MONGO_DB" `
+  --namespace=dev `
+  --dry-run=client -o yaml |
+kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/mongo-sealed-secret.yaml
+
+# PostgreSQL secrets (all services)
+kubectl create secret generic psql-secrets `
+  --from-literal=AUTH_DB_USERNAME="$env:AUTH_DB_USERNAME" `
+  --from-literal=AUTH_DB_PASSWORD="$env:AUTH_DB_PASSWORD" `
+  --from-literal=AUTH_DB_NAME="$env:AUTH_DB_NAME" `
+  --from-literal=ERP_DB_USERNAME="$env:ERP_DB_USERNAME" `
+  --from-literal=ERP_DB_PASSWORD="$env:ERP_DB_PASSWORD" `
+  --from-literal=ERP_DB_NAME="$env:ERP_DB_NAME" `
+  --from-literal=ORDER_DB_USERNAME="$env:ORDER_DB_USERNAME" `
+  --from-literal=ORDER_DB_PASSWORD="$env:ORDER_DB_PASSWORD" `
+  --from-literal=ORDER_DB_NAME="$env:ORDER_DB_NAME" `
+  --from-literal=WAREHOUSE_DB_USERNAME="$env:WAREHOUSE_DB_USERNAME" `
+  --from-literal=WAREHOUSE_DB_PASSWORD="$env:WAREHOUSE_DB_PASSWORD" `
+  --from-literal=WAREHOUSE_DB_NAME="$env:WAREHOUSE_DB_NAME" `
+  --namespace=dev `
+  --dry-run=client -o yaml |
+kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/psql-sealed-secret.yaml
+
+kubectl apply -f kubernetes-secrets/mongo-sealed-secret.yaml
+kubectl apply -f kubernetes-secrets/psql-sealed-secret.yaml
+
 kubectl apply -f kubernetes-secrets/auth-sealed-secret.yaml
 kubectl apply -f kubernetes-secrets/erp-sealed-secret.yaml
 kubectl apply -f kubernetes-secrets/order-sealed-secret.yaml
