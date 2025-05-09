@@ -48,3 +48,10 @@ kubectl create secret generic courier-secrets `
   --namespace=dev `
   --dry-run=client -o yaml |
 kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/courier-sealed-secret.yaml
+
+kubectl apply -f kubernetes-secrets/auth-sealed-secret.yaml
+kubectl apply -f kubernetes-secrets/erp-sealed-secret.yaml
+kubectl apply -f kubernetes-secrets/order-sealed-secret.yaml
+kubectl apply -f kubernetes-secrets/warehouse-sealed-secret.yaml
+kubectl apply -f kubernetes-secrets/cart-sealed-secret.yaml
+kubectl apply -f kubernetes-secrets/courier-sealed-secret.yaml
