@@ -26,6 +26,13 @@ Create chart name and version as used by the chart label.
 {{- end -}}
 
 {{/*
+Expand the name of the chart. Used for app and selector labels.
+*/}}
+{{- define "spring-boot-microservice.name" -}}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{/*
 Expand the name of the chart. Used as a base name in some templates.
 */}}
 {{- define "spring-boot-microservice.fullname" -}}
