@@ -13,7 +13,7 @@ service:
 
 env:
   - name: SPRING_DATASOURCE_URL
-    value: jdbc:postgresql://psql:5432/authDB
+    value: jdbc:postgresql://psql-service:5432/authDB
   - name: SPRING_DATA_REDIS_HOST
     value: redis-cache-service
 
