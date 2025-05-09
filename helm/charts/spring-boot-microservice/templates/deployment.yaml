@@ -19,7 +19,6 @@ spec:
       labels:
         {{- include "spring-boot-microservice.selectorLabels" . | nindent 8 }} # Label pods by service name and release
       # annotations: # Optional: Add pod-specific annotations (e.g., for Istio, Prometheus)
-      #   checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }} # Example: restart pod if configmap changes
     spec:
       # podSecurityContext: {{/* Optional: Define pod-level security context */}}
       #   {{- toYaml .Values.podSecurityContext | nindent 8 }}
