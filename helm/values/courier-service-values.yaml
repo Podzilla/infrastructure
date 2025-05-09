@@ -10,6 +10,8 @@ image:
 service:
   port: 8082
   type: ClusterIP
+  healthUrl: /api/actuator/health
+
 
 env:
   - name: SPRING_DATA_MONGODB_URI

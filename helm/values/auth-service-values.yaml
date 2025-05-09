@@ -10,6 +10,7 @@ image:
 service:
   port: 8086
   type: ClusterIP
+  healthUrl: /api/actuator/health
 
 env:
   - name: SPRING_DATASOURCE_URL
