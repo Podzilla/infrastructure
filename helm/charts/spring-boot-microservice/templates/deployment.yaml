@@ -1,94 +1,56 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.serviceName }}-deployment # Consistent naming based on serviceName
+  name: {{ include "spring-boot-microservice.fullname" . }}
   labels:
-    {{- include "spring-boot-microservice.labels" . | nindent 4 }}
+    app: {{ include "spring-boot-microservice.name" . }}
+    chart: {{ include "spring-boot-microservice.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
-  # Strategy: # Optional: Define deployment strategy (e.g., RollingUpdate)
-  #   type: RollingUpdate
-  #   rollingUpdate:
-  #     maxUnavailable: 1
-  #     maxSurge: 1
-  replicas: {{ .Values.replicaCount }} # Use replicaCount from values
+  replicas: {{ .Values.replicaCount | default 1 }}
   selector:
     matchLabels:
-      {{- include "spring-boot-microservice.selectorLabels" . | nindent 6 }} # Select pods by service name and release
+      app: {{ include "spring-boot-microservice.name" . }}
+      release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        {{- include "spring-boot-microservice.selectorLabels" . | nindent 8 }} # Label pods by service name and release
-      # annotations: # Optional: Add pod-specific annotations (e.g., for Istio, Prometheus)
+        app: {{ include "spring-boot-microservice.name" . }}
+        release: {{ .Release.Name }}
     spec:
-      # podSecurityContext: {{/* Optional: Define pod-level security context */}}
-      #   {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Values.serviceName }}-container # Consistent container naming
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" # Use image from values
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          # securityContext: {{/* Optional: Define container-level security context */}}
-          #   {{- toYaml .Values.securityContext | nindent 12 }}
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
           ports:
-            - name: http # Consistent port naming
-              containerPort: {{ .Values.service.port }} # Use port from values
-              protocol: TCP
+            - containerPort: {{ .Values.service.port | default 8080 }}
           env:
-            # Inject standard env vars from values.yaml
-            {{- range .Values.env }}
-            - name: {{ .name | quote }}
-              value: {{ .value | quote }}
-            {{- end }}
-
-          # Inject ALL key-value pairs from the specified Kubernetes Secret
-          # The Secret resource itself must be created separately and securely.
-          {{- if .Values.secretName }}
-          envFrom:
-            - secretRef:
-                name: {{ .Values.secretName }} # Use secretName from values
-          {{- end }}
-
-          # Mount the logs volume if enabled
-          {{- if .Values.logVolume.enabled }}
-          volumeMounts:
-            - name: log-volume # Must match volume name below
-              mountPath: /logs
-          {{- end }}
-
-          # Resource requests and limits if defined in values.yaml
-          {{- with .Values.resources }}
-          resources:
+            {{- with .Values.env }}
             {{- toYaml . | nindent 12 }}
-          {{- end }}
-          # readinessProbe: # Optional: Configure health checks
-          #   httpGet:
-          #     path: /actuator/health/readiness # Example Spring Boot Actuator path
-          #     port: http
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 10
-          # livenessProbe: # Optional: Configure health checks
-          #   httpGet:
-          #     path: /actuator/health/liveness # Example Spring Boot Actuator path
-          #     port: http
-          #   initialDelaySeconds: 15
-          #   periodSeconds: 20
-
-      # Volumes referenced by volumeMounts
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: {{ .Values.service.port | default 8080 }}
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: {{ .Values.service.port | default 8080 }}
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          volumeMounts:
+            {{- if .Values.configMapName }}
+            - name: config
+              mountPath: /config
+            {{- end }}
       volumes:
-        {{- if .Values.logVolume.enabled }}
-        - name: log-volume # Must match volumeMount name above
-          persistentVolumeClaim:
-            claimName: {{ .Values.serviceName }}-log-pvc # Refers to the PVC created by this chart
+        {{- if .Values.configMapName }}
+        - name: config
+          configMap:
+            name: {{ .Values.configMapName }}
         {{- end }}
-      # Optional: Node selector, affinity, tolerations from values
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
