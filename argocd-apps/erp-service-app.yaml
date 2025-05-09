@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: erp-service
+  name: erp
   namespace: argocd
 spec:
   project: default
@@ -11,7 +11,7 @@ spec:
     path: helm/charts/spring-boot-microservice
     helm:
       valueFiles:
-        - ../../values/auth-service-values.yaml
+        - ../../values/erp-service-values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: dev
