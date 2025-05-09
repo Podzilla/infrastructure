@@ -1,0 +1,44 @@
+# Specific values for the Order microservice, overriding defaults in spring-boot-microservice/values.yaml
+
+serviceName: order # Unique name for this service
+
+replicaCount: 3 # Example: Order service might need more replicas
+
+image:
+  repository: your-registry/order-backend # <-- REPLACE with your actual Order service image location
+  tag: v1.1.0 # <-- REPLACE with the specific version tag you want to deploy
+
+service:
+  port: 8080
+  type: ClusterIP
+
+env:
+  # Non-sensitive environment variables specific to the order service
+  - name: SPRING_DATASOURCE_URL
+    value: jdbc:postgresql://order-db-service:5432/orderDB # Connects to the order-db K8s Service
+  - name: SPRING_DATA_REDIS_HOST
+    value: redis-cache-service # Connects to the redis-cache K8s Service
+  # Add other non-sensitive Order-specific vars here
+
+secretName: order-secrets # <-- The name of the K8s Secret containing Order's sensitive env vars.
+  #     This K8s Secret MUST exist BEFORE deploying this chart.
+#     (See kubernetes-secrets/README.md)
+
+logVolume:
+  enabled: true
+  size: 2Gi # Example: Order might generate more logs
+
+resources: # Example resource requests/limits for order
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: 400m
+    memory: 512Mi
+
+# nodeSelector: {} # Uncomment and configure if needed
+# affinity: {} # Uncomment and configure if needed
+# tolerations: [] # Uncomment and configure if needed
+
+# podSecurityContext: {} # Uncomment and configure if needed
+# securityContext: {} # Uncomment and configure if needed

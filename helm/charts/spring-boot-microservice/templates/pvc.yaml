@@ -1,0 +1,16 @@
+# Only create the PVC if logVolume is enabled in values
+{{- if .Values.logVolume.enabled -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.serviceName }}-log-pvc # Consistent PVC naming
+  labels:
+    {{- include "spring-boot-microservice.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce # Standard access mode for single-pod access
+  resources:
+    requests:
+      storage: {{ .Values.logVolume.size }} # PVC size from values
+  # storageClassName: standard # Optional: Specify a StorageClass if needed
+{{- end -}}

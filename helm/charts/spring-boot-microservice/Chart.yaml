@@ -1,0 +1,21 @@
+apiVersion: v2 # Use v2 for Helm 3+ charts
+name: spring-boot-microservice
+description: A generic Helm chart for deploying a standard Spring Boot microservice on Kubernetes.
+type: application
+version: 0.1.0 # Chart version - increment this when the chart templates change
+appVersion: "latest" # Default application version (can be overridden in values)
+keywords:
+  - spring-boot
+  - microservice
+  - java
+sources:
+  - https://github.com/YOUR_ORG/infrastructure # Link to your infra repo (optional)
+# dependencies: # Add dependencies for things like external databases or Redis charts if needed
+#   - name: postgresql
+#     version: 12.x.x
+#     repository: https://charts.bitnami.com/bitnami
+#     condition: postgresql.enabled
+#   - name: redis
+#     version: 18.x.x
+#     repository: https://charts.bitnami.com/bitnami
+#     condition: redis.enabled

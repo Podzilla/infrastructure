@@ -1,0 +1,24 @@
+# Example: infrastructure/argocd-apps/auth-service-app.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: auth-service # Name of the Argo CD application
+  namespace: argocd # Deploy into the namespace where Argo CD is installed
+spec:
+  project: default # Assign to a project in Argo CD (can customize projects)
+  source:
+    repoURL: YOUR_INFRA_REPO_URL # <-- Replace with your infrastructure Git repository URL
+    targetRevision: HEAD # Or a specific branch, tag, or commit SHA (e.g., main, v1.0.0)
+    path: helm/charts/spring-boot-microservice # Path to the common Helm chart
+    helm:
+      valueFiles:
+        - helm/values/auth-service-values.yaml # Path to the service-specific values file
+  destination:
+    server: https://kubernetes.default.svc # The in-cluster Kubernetes API server URL
+    namespace: your-microservices-namespace # <-- The namespace where the service should be deployed
+  syncPolicy:
+    automated: # Enable automated synchronization
+      prune: true # Delete resources from the cluster that are no longer in Git
+      selfHeal: true # Automatically sync if the cluster state drifts from Git
+    syncOptions:
+      - CreateNamespace=true # Automatically create the destination namespace if it doesn't exist
