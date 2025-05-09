@@ -5,6 +5,7 @@ kubectl create secret generic auth-secrets `
   --from-literal=SPRING_DATASOURCE_USERNAME="$env:AUTH_DB_USERNAME" `
   --from-literal=SPRING_DATASOURCE_PASSWORD="$env:AUTH_DB_PASSWORD" `
   --from-literal=SECRET_KEY="$env:AUTH_SECRET_KEY" `
+  --namespace=dev `
   --dry-run=client -o yaml |
 kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/auth-sealed-secret.yaml
 
@@ -12,6 +13,7 @@ kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/auth-sealed
 kubectl create secret generic erp-secrets `
   --from-literal=SPRING_DATASOURCE_USERNAME="$env:ERP_DB_USERNAME" `
   --from-literal=SPRING_DATASOURCE_PASSWORD="$env:ERP_DB_PASSWORD" `
+  --namespace=dev `
   --dry-run=client -o yaml |
 kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/erp-sealed-secret.yaml
 
@@ -19,6 +21,7 @@ kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/erp-sealed-
 kubectl create secret generic order-secrets `
   --from-literal=SPRING_DATASOURCE_USERNAME="$env:ORDER_DB_USERNAME" `
   --from-literal=SPRING_DATASOURCE_PASSWORD="$env:ORDER_DB_PASSWORD" `
+  --namespace=dev `
   --dry-run=client -o yaml |
 kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/order-sealed-secret.yaml
 
@@ -26,6 +29,7 @@ kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/order-seale
 kubectl create secret generic warehouse-secrets `
   --from-literal=SPRING_DATASOURCE_USERNAME="$env:WAREHOUSE_DB_USERNAME" `
   --from-literal=SPRING_DATASOURCE_PASSWORD="$env:WAREHOUSE_DB_PASSWORD" `
+  --namespace=dev `
   --dry-run=client -o yaml |
 kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/warehouse-sealed-secret.yaml
 
@@ -33,6 +37,7 @@ kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/warehouse-s
 kubectl create secret generic cart-secrets `
   --from-literal=SPRING_DATA_MONGODB_USERNAME="$env:CART_MONGO_USERNAME" `
   --from-literal=SPRING_DATA_MONGODB_PASSWORD="$env:CART_MONGO_PASSWORD" `
+  --namespace=dev `
   --dry-run=client -o yaml |
 kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/cart-sealed-secret.yaml
 
@@ -40,5 +45,6 @@ kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/cart-sealed
 kubectl create secret generic courier-secrets `
   --from-literal=SPRING_DATA_MONGODB_USERNAME="$env:COURIER_MONGO_USERNAME" `
   --from-literal=SPRING_DATA_MONGODB_PASSWORD="$env:COURIER_MONGO_PASSWORD" `
+  --namespace=dev `
   --dry-run=client -o yaml |
 kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/courier-sealed-secret.yaml
