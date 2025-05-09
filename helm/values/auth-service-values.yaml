@@ -16,6 +16,8 @@ env:
     value: jdbc:postgresql://psql-service:5432/authDB
   - name: SPRING_DATA_REDIS_HOST
     value: redis-cache-service
+  - name: SERVER_PORT
+    value: "8086"
 
 secretName: auth-secrets
 
