@@ -55,7 +55,7 @@ spec:
       volumes:
         - name: log-volume
           persistentVolumeClaim:
-            claimName: {{ .Values.serviceName }}-log-pvc
+            claimName: {{ include "spring-boot-microservice.fullname" . }}-log-pvc
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector: {{- toYaml . | nindent 8 }}
