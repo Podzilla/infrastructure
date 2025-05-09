@@ -43,12 +43,20 @@ spec:
               port: {{ .Values.service.port | default 8080 }}
             initialDelaySeconds: 30
             periodSeconds: 10
+          {{- if eq .Values.serviceName "psql" }}
+          readinessProbe:
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          {{- else }}
           readinessProbe:
             httpGet:
               path: /actuator/health
               port: {{ .Values.service.port | default 8080 }}
             initialDelaySeconds: 10
             periodSeconds: 5
+          {{- end }}
           {{- if .Values.logVolume.enabled }}
           volumeMounts:
             - name: log-volume
