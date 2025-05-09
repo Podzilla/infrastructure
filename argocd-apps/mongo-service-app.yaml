@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mongo
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Podzilla/infrastructure
+    targetRevision: main
+    path: helm/charts/spring-boot-microservice
+    helm:
+      valueFiles:
+        - ../../values/mongo-service-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,24 @@
+
+serviceName: redisinsight
+
+replicaCount: 2
+
+image:
+  repository: redis/redisinsight
+  tag: 2.68
+
+service:
+  port: 5540
+  type: ClusterIP
+
+logVolume:
+  enabled: true
+  size: 1Gi
+
+resources:
+  requests:
+    cpu: 150m
+    memory: 200Mi
+  limits:
+    cpu: 300m
+    memory: 400Mi

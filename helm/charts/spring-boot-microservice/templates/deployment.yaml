@@ -20,6 +20,9 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          {{- if .Values.command }}
+          command: {{- toYaml .Values.command | nindent 12 }}
+          {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
           ports:
             - containerPort: {{ .Values.service.port | default 8080 }}
@@ -51,11 +54,17 @@ spec:
             - name: log-volume
               mountPath: /logs
           {{- end }}
+          {{- if .Values.extraVolumeMounts }}
+          {{ toYaml .Values.extraVolumeMounts | nindent 12 }}
+          {{- end }}
       {{- if .Values.logVolume.enabled }}
       volumes:
         - name: log-volume
           persistentVolumeClaim:
             claimName: {{ include "spring-boot-microservice.fullname" . }}-log-pvc
+      {{- end }}
+      {{- if .Values.extraVolumes }}
+      {{ toYaml .Values.extraVolumes | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector: {{- toYaml . | nindent 8 }}
