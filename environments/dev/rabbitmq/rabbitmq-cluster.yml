@@ -12,6 +12,7 @@ spec:
   rabbitmq:
     additionalConfig: |
       load_definitions = /etc/rabbitmq-definitions/definitions.json
+      loopback_users.guest = false
     additionalPlugins:
       - rabbitmq_management
   override:
