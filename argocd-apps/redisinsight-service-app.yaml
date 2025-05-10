@@ -8,10 +8,7 @@ spec:
   source:
     repoURL: https://github.com/Podzilla/infrastructure
     targetRevision: main
-    path: helm/charts/spring-boot-microservice
-    helm:
-      valueFiles:
-        - ../../values/redisinsight-service-values.yaml
+    path: environments/dev/redisinsight
   destination:
     server: https://kubernetes.default.svc
     namespace: dev

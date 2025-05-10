@@ -8,10 +8,7 @@ spec:
   source:
     repoURL: https://github.com/Podzilla/infrastructure
     targetRevision: main
-    path: helm/charts/spring-boot-microservice
-    helm:
-      valueFiles:
-        - ../../values/mongo-service-values.yaml
+    path: environments/dev/mongo
   destination:
     server: https://kubernetes.default.svc
     namespace: dev

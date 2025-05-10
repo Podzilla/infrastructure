@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: psql
+  namespace: dev
+  labels:
+    app: psql
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: psql
+  template:
+    metadata:
+      labels:
+        app: psql
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:14.17
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: psql-secrets
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+            - name: init-scripts
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: psql-pvc
+        - name: init-scripts
+          configMap:
+            name: psql-init-scripts

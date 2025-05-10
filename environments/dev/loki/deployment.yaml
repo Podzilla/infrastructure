@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loki
+  namespace: dev
+  labels:
+    app: loki
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: loki
+  template:
+    metadata:
+      labels:
+        app: loki
+    spec:
+      containers:
+        - name: loki
+          image: grafana/loki:3.5.0
+          command: ["-config.file=/etc/loki/local-config.yaml"]
+          ports:
+            - containerPort: 3100
+          resources:
+            requests:
+              cpu: 150m
+              memory: 200Mi
+            limits:
+              cpu: 300m
+              memory: 400Mi
+          volumeMounts:
+            - name: loki-config
+              mountPath: /etc/loki/local-config.yaml
+              subPath: local-config.yaml
+            - name: log-volume
+              mountPath: /loki
+      volumes:
+        - name: loki-config
+          hostPath:
+            path: /absolute/path/to/local-config.yaml
+            type: File
+        - name: log-volume
+          persistentVolumeClaim:
+            claimName: loki-log-pvc
