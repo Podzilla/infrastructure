@@ -31,5 +31,13 @@ spec:
                 secretKeyRef:
                   name: mongo-secrets
                   key: MONGO_INITDB_ROOT_PASSWORD
-            - name: ME_CONFIG_BASICAUTH
-              value: "false"
+            - name: ME_CONFIG_BASICAUTH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secrets
+                  key: MONGO_INITDB_ROOT_USERNAME
+            - name: ME_CONFIG_BASICAUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secrets
+                  key: MONGO_INITDB_ROOT_PASSWORD
