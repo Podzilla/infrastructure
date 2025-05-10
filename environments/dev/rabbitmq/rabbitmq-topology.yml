@@ -6,6 +6,9 @@ metadata:
 data:
   definitions.json: |
     {
+      "vhosts": [
+        { "name": "/" }
+      ],
       "exchanges": [
         { "name": "user_exchange", "vhost": "/", "type": "topic", "durable": true },
         { "name": "inventory_exchange", "vhost": "/", "type": "topic", "durable": true },
@@ -20,29 +23,29 @@ data:
         { "name": "courier_order_event_queue", "vhost": "/", "durable": true }
       ],
       "bindings": [
-        { "source": "user_exchange", "destination": "analytics_user_event_queue", "destination_type": "queue", "routing_key": "courier.registered" },
-        { "source": "user_exchange", "destination": "analytics_user_event_queue", "destination_type": "queue", "routing_key": "customer.registered" },
+        { "source": "user_exchange", "destination": "analytics_user_event_queue", "destination_type": "queue", "routing_key": "courier.registered", "vhost": "/" },
+        { "source": "user_exchange", "destination": "analytics_user_event_queue", "destination_type": "queue", "routing_key": "customer.registered", "vhost": "/" },
 
-        { "source": "inventory_exchange", "destination": "analytics_inventory_event_queue", "destination_type": "queue", "routing_key": "product.created" },
-        { "source": "inventory_exchange", "destination": "analytics_inventory_event_queue", "destination_type": "queue", "routing_key": "inventory.updated" },
+        { "source": "inventory_exchange", "destination": "analytics_inventory_event_queue", "destination_type": "queue", "routing_key": "product.created", "vhost": "/" },
+        { "source": "inventory_exchange", "destination": "analytics_inventory_event_queue", "destination_type": "queue", "routing_key": "inventory.updated", "vhost": "/" },
 
-        { "source": "order_exchange", "destination": "analytics_order_event_queue", "destination_type": "queue", "routing_key": "cart.checkedout" },
-        { "source": "order_exchange", "destination": "analytics_order_event_queue", "destination_type": "queue", "routing_key": "order.*" },
+        { "source": "order_exchange", "destination": "analytics_order_event_queue", "destination_type": "queue", "routing_key": "cart.checkedout", "vhost": "/" },
+        { "source": "order_exchange", "destination": "analytics_order_event_queue", "destination_type": "queue", "routing_key": "order.*", "vhost": "/" },
 
-        { "source": "order_exchange", "destination": "order_order_event_queue", "destination_type": "queue", "routing_key": "cart.checkedout" },
-        { "source": "order_exchange", "destination": "order_order_event_queue", "destination_type": "queue", "routing_key": "order.packaged" },
-        { "source": "order_exchange", "destination": "order_order_event_queue", "destination_type": "queue", "routing_key": "order.shipped" },
-        { "source": "order_exchange", "destination": "order_order_event_queue", "destination_type": "queue", "routing_key": "order.delivered" },
-        { "source": "order_exchange", "destination": "order_order_event_queue", "destination_type": "queue", "routing_key": "order.failed" },
+        { "source": "order_exchange", "destination": "order_order_event_queue", "destination_type": "queue", "routing_key": "cart.checkedout", "vhost": "/" },
+        { "source": "order_exchange", "destination": "order_order_event_queue", "destination_type": "queue", "routing_key": "order.packaged", "vhost": "/" },
+        { "source": "order_exchange", "destination": "order_order_event_queue", "destination_type": "queue", "routing_key": "order.shipped", "vhost": "/" },
+        { "source": "order_exchange", "destination": "order_order_event_queue", "destination_type": "queue", "routing_key": "order.delivered", "vhost": "/" },
+        { "source": "order_exchange", "destination": "order_order_event_queue", "destination_type": "queue", "routing_key": "order.failed", "vhost": "/" },
 
-        { "source": "order_exchange", "destination": "warehouse_order_event_queue", "destination_type": "queue", "routing_key": "order.placed" },
-        { "source": "order_exchange", "destination": "warehouse_order_event_queue", "destination_type": "queue", "routing_key": "order.cancelled" },
-        { "source": "order_exchange", "destination": "warehouse_order_event_queue", "destination_type": "queue", "routing_key": "order.assigned_to_courier" },
+        { "source": "order_exchange", "destination": "warehouse_order_event_queue", "destination_type": "queue", "routing_key": "order.placed", "vhost": "/" },
+        { "source": "order_exchange", "destination": "warehouse_order_event_queue", "destination_type": "queue", "routing_key": "order.cancelled", "vhost": "/" },
+        { "source": "order_exchange", "destination": "warehouse_order_event_queue", "destination_type": "queue", "routing_key": "order.assigned_to_courier", "vhost": "/" },
 
-        { "source": "order_exchange", "destination": "courier_order_event_queue", "destination_type": "queue", "routing_key": "order.packaged" },
-        { "source": "order_exchange", "destination": "courier_order_event_queue", "destination_type": "queue", "routing_key": "order.assigned_to_courier" },
-        { "source": "order_exchange", "destination": "courier_order_event_queue", "destination_type": "queue", "routing_key": "order.shipped" },
-        { "source": "order_exchange", "destination": "courier_order_event_queue", "destination_type": "queue", "routing_key": "order.delivered" },
-        { "source": "order_exchange", "destination": "courier_order_event_queue", "destination_type": "queue", "routing_key": "order.failed" }
+        { "source": "order_exchange", "destination": "courier_order_event_queue", "destination_type": "queue", "routing_key": "order.packaged", "vhost": "/" },
+        { "source": "order_exchange", "destination": "courier_order_event_queue", "destination_type": "queue", "routing_key": "order.assigned_to_courier", "vhost": "/" },
+        { "source": "order_exchange", "destination": "courier_order_event_queue", "destination_type": "queue", "routing_key": "order.shipped", "vhost": "/" },
+        { "source": "order_exchange", "destination": "courier_order_event_queue", "destination_type": "queue", "routing_key": "order.delivered", "vhost": "/" },
+        { "source": "order_exchange", "destination": "courier_order_event_queue", "destination_type": "queue", "routing_key": "order.failed", "vhost": "/" }
       ]
     }
