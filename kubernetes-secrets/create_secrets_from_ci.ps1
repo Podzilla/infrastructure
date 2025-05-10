@@ -64,6 +64,8 @@ kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/mongo-seale
 
 # PostgreSQL secrets (all services)
 kubectl create secret generic psql-secrets `
+  --from-literal=POSTGRES_USER="$env:POSTGRES_USER" `
+  --from-literal=POSTGRES_PASSWORD="$env:POSTGRES_PASSWORD" `
   --from-literal=AUTH_DB_USERNAME="$env:AUTH_DB_USERNAME" `
   --from-literal=AUTH_DB_PASSWORD="$env:AUTH_DB_PASSWORD" `
   --from-literal=AUTH_DB_NAME="$env:AUTH_DB_NAME" `
