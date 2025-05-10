@@ -26,8 +26,6 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /data/db
-            - name: init-scripts
-              mountPath: /docker-entrypoint-initdb.d
           resources:
             requests:
               cpu: 150m
