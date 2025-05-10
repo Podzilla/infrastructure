@@ -6,12 +6,9 @@ metadata:
 data:
   init-users-mongo.sh: |
     #!/bin/bash
-    set -e
-
     mongo <<EOF
-    use \$COURIER_DB_NAME
-    db.createUser({user: "\$COURIER_DB_USERNAME", pwd: "\$COURIER_DB_PASSWORD", roles: [{role: "readWrite", db: "\$COURIER_DB_NAME"}]})
-
-    use \$CART_DB_NAME
-    db.createUser({user: "\$CART_DB_USERNAME", pwd: "\$CART_DB_PASSWORD", roles: [{role: "readWrite", db: "\$CART_DB_NAME"}]})
+    use $CART_MONGO_DB
+    db.createUser({user: "$CART_MONGO_USERNAME", pwd: "$CART_MONGO_PASSWORD", roles: [{role: "readWrite", db: "$CART_MONGO_DB"}]})
+    use $COURIER_MONGO_DB
+    db.createUser({user: "$COURIER_MONGO_USERNAME", pwd: "$COURIER_MONGO_PASSWORD", roles: [{role: "readWrite", db: "$COURIER_MONGO_DB"}]})
     EOF

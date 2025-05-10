@@ -58,6 +58,8 @@ kubectl create secret generic mongo-secrets `
   --from-literal=COURIER_MONGO_USERNAME="$env:COURIER_MONGO_USERNAME" `
   --from-literal=COURIER_MONGO_PASSWORD="$env:COURIER_MONGO_PASSWORD" `
   --from-literal=COURIER_MONGO_DB="$env:COURIER_MONGO_DB" `
+  --from-literal=MONGO_INITDB_ROOT_USERNAME="$env:MONGO_INITDB_ROOT_USERNAME" `
+  --from-literal=MONGO_INITDB_ROOT_PASSWORD="$env:MONGO_INITDB_ROOT_PASSWORD" `
   --namespace=dev `
   --dry-run=client -o yaml |
 kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/mongo-sealed-secret.yaml
@@ -66,7 +68,7 @@ kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/mongo-seale
 kubectl create secret generic psql-secrets `
   --from-literal=POSTGRES_USER="$env:POSTGRES_USER" `
   --from-literal=POSTGRES_PASSWORD="$env:POSTGRES_PASSWORD" `
-    --from-literal=POSTGRES_DB="$env:POSTGRES_DB" `
+  --from-literal=POSTGRES_DB="$env:POSTGRES_DB" `
   --from-literal=AUTH_DB_USERNAME="$env:AUTH_DB_USERNAME" `
   --from-literal=AUTH_DB_PASSWORD="$env:AUTH_DB_PASSWORD" `
   --from-literal=AUTH_DB_NAME="$env:AUTH_DB_NAME" `
