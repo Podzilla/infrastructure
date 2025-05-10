@@ -1,5 +1,7 @@
 # Requires: kubectl, kubeseal, and environment variables set
 
+
+
 # Auth service (PostgreSQL + SECRET_KEY)
 kubectl create secret generic auth-secrets `
   --from-literal=SPRING_DATASOURCE_USERNAME="$env:AUTH_DB_USERNAME" `
