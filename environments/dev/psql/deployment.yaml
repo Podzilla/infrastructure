@@ -32,6 +32,3 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: psql-pvc
-        - name: init-scripts
-          configMap:
-            name: psql-init-scripts

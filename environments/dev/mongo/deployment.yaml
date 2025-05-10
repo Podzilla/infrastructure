@@ -39,6 +39,3 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: mongo-pvc
-        - name: init-scripts
-          configMap:
-            name: mongo-init-scripts
