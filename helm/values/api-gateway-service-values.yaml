@@ -13,6 +13,10 @@ service:
   healthUrl: /api/actuator/health
 
 env:
+
+  - name: SERVER_PORT
+    value: "80"
+
   # basic routes
   - name: ROUTES_AUTH
     value: "http://auth-service:8086"
