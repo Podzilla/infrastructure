@@ -35,8 +35,7 @@ env:
   - name: SPRING_CLOUD_GATEWAY_ROUTES_0_ID
     value: "courier-route"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_0_URI
-    valueFrom:
-      envVar: ROUTES_COURIER
+    value: "http://courier-service:8082"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_0_PREDICATES_0
     value: "Path=/couriers/**"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_0_FILTERS_0
@@ -46,8 +45,7 @@ env:
   - name: SPRING_CLOUD_GATEWAY_ROUTES_1_ID
     value: "delivery-route"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_1_URI
-    valueFrom:
-      envVar: ROUTES_COURIER
+    value: "http://courier-service:8082"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_1_PREDICATES_0
     value: "Path=/delivery-tasks/**"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_1_FILTERS_0
@@ -57,8 +55,7 @@ env:
   - name: SPRING_CLOUD_GATEWAY_ROUTES_2_ID
     value: "warehouse-route"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_2_URI
-    valueFrom:
-      envVar: ROUTES_WAREHOUSE
+    value: "http://warehouse-service:8085"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_2_PREDICATES_0
     value: "Path=/warehouse/**"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_2_FILTERS_0
@@ -68,8 +65,7 @@ env:
   - name: SPRING_CLOUD_GATEWAY_ROUTES_3_ID
     value: "cart-route"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_3_URI
-    valueFrom:
-      envVar: ROUTES_CART
+    value: "http://cart-service:8081"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_3_PREDICATES_0
     value: "Path=/carts/**"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_3_FILTERS_0
@@ -79,8 +75,7 @@ env:
   - name: SPRING_CLOUD_GATEWAY_ROUTES_4_ID
     value: "order-route"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_4_URI
-    valueFrom:
-      envVar: ROUTES_ORDER
+    value: "http://order-service:8084"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_4_PREDICATES_0
     value: "Path=/orders/**"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_4_FILTERS_0
@@ -90,8 +85,7 @@ env:
   - name: SPRING_CLOUD_GATEWAY_ROUTES_5_ID
     value: "user-route"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_5_URI
-    valueFrom:
-      envVar: ROUTES_AUTH
+    value: "http://auth-service:8086"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_5_PREDICATES_0
     value: "Path=/users/**"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_5_FILTERS_0
@@ -101,8 +95,7 @@ env:
   - name: SPRING_CLOUD_GATEWAY_ROUTES_6_ID
     value: "admin-route"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_6_URI
-    valueFrom:
-      envVar: ROUTES_AUTH
+    value: "http://auth-service:8086"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_6_PREDICATES_0
     value: "Path=/admins/**"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_6_FILTERS_0
@@ -112,8 +105,7 @@ env:
   - name: SPRING_CLOUD_GATEWAY_ROUTES_7_ID
     value: "auth-route"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_7_URI
-    valueFrom:
-      envVar: ROUTES_AUTH
+    value: "http://auth-service:8086"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_7_PREDICATES_0
     value: "Path=/auth/**"
   - name: SPRING_CLOUD_GATEWAY_ROUTES_7_FILTERS_0
