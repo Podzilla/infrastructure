@@ -6,8 +6,7 @@ metadata:
 spec:
   ingressClassName: nginx # <--- Add this line
   rules:
-    - host: podzilla.dev.com
-      http:
+    - http:
         paths:
           - path: /
             pathType: Prefix
