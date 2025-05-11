@@ -4,6 +4,7 @@ metadata:
   name: api-gateway-ingress
   namespace: dev
 spec:
+  ingressClassName: nginx # <--- Add this line
   rules:
     - host: podzilla.dev.com
       http:
