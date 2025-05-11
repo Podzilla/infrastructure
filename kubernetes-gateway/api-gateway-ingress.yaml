@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: api-gateway-ingress
   namespace: dev
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
     - host: podzilla.dev.com
