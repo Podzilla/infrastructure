@@ -13,9 +13,9 @@ spec:
       memory: 512Mi
       cpu: 250m
   rabbitmq:
-    additionalConfig: |
-      load_definitions = /etc/rabbitmq-definitions/definitions.json
-      loopback_users.guest = false
+#    additionalConfig: |
+#      load_definitions = /etc/rabbitmq-definitions/definitions.json
+#      loopback_users.guest = false
     additionalPlugins:
       - rabbitmq_management
   override:
