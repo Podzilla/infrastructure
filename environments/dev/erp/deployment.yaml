@@ -33,6 +33,8 @@ spec:
               value: "5672"
             - name: SERVER_SERVLET_CONTEXT_PATH
               value: /api
+            - name: SERVER_PORT
+              value: "8083"
           envFrom:
             - secretRef:
                 name: erp-secrets
