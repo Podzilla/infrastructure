@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+  labels:
+    app.kubernetes.io/name: order
+    app.kubernetes.io/instance: order-service # Using service name as instance name
+    app.kubernetes.io/managed-by: manual # Indicating manual management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: order
+      app.kubernetes.io/instance: order-service
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: order
+        app.kubernetes.io/instance: order-service
+    spec:
+      containers:
+        - name: order
+          image: "nourwk/order:v1.0.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8084
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://psql-db:5432/orderDB
+          envFrom:
+            - secretRef:
+                name: order-secrets
+          resources:
+            requests:
+              cpu: 150m
+              memory: 200Mi
+            limits:
+              cpu: 300m
+              memory: 400Mi
+          livenessProbe:
+            httpGet:
+              path: /api/actuator/health
+              port: 8084
+            initialDelaySeconds: 300
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api/actuator/health
+              port: 8084
+            initialDelaySeconds: 300
+            periodSeconds: 5

@@ -1,0 +1,128 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway-service
+  labels:
+    app.kubernetes.io/name: api-gateway
+    app.kubernetes.io/instance: api-gateway-service # Using service name as instance name
+    app.kubernetes.io/managed-by: manual # Indicating manual management
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: api-gateway
+      app.kubernetes.io/instance: api-gateway-service
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: api-gateway
+        app.kubernetes.io/instance: api-gateway-service
+    spec:
+      containers:
+        - name: api-gateway
+          image: "nourwk/api-gateway:v1.0.1"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          env:
+            - name: SERVER_PORT
+              value: "80"
+            - name: ROUTES_AUTH
+              value: "http://auth-service:8086"
+            - name: ROUTES_COURIER
+              value: "http://courier-service:8082"
+            - name: ROUTES_WAREHOUSE
+              value: "http://warehouse-service:8085"
+            - name: ROUTES_ERP
+              value: "http://erp-service:8083"
+            - name: ROUTES_ORDER
+              value: "http://order-service:8084"
+            - name: ROUTES_CART
+              value: "http://cart-service:8081"
+            - name: SPRING_APPLICATION_NAME
+              value: "api-gateway"
+            - name: SPRING_MAIN_WEB_APPLICATION_TYPE
+              value: "reactive"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_0_ID
+              value: "courier-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_0_URI
+              value: "http://courier-service:8082"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_0_PREDICATES_0
+              value: "Path=/couriers/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_0_FILTERS_0
+              value: "PrefixPath=/api"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_1_ID
+              value: "delivery-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_1_URI
+              value: "http://courier-service:8082"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_1_PREDICATES_0
+              value: "Path=/delivery-tasks/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_1_FILTERS_0
+              value: "PrefixPath=/api"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_2_ID
+              value: "warehouse-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_2_URI
+              value: "http://warehouse-service:8085"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_2_PREDICATES_0
+              value: "Path=/warehouse/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_2_FILTERS_0
+              value: "PrefixPath=/api"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_3_ID
+              value: "cart-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_3_URI
+              value: "http://cart-service:8081"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_3_PREDICATES_0
+              value: "Path=/carts/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_3_FILTERS_0
+              value: "PrefixPath=/api"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_4_ID
+              value: "order-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_4_URI
+              value: "http://order-service:8084"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_4_PREDICATES_0
+              value: "Path=/orders/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_4_FILTERS_0
+              value: "PrefixPath=/api"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_5_ID
+              value: "user-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_5_URI
+              value: "http://auth-service:8086"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_5_PREDICATES_0
+              value: "Path=/users/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_5_FILTERS_0
+              value: "PrefixPath=/api"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_6_ID
+              value: "admin-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_6_URI
+              value: "http://auth-service:8086"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_6_PREDICATES_0
+              value: "Path=/admins/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_6_FILTERS_0
+              value: "PrefixPath=/api"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_7_ID
+              value: "auth-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_7_URI
+              value: "http://auth-service:8086"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_7_PREDICATES_0
+              value: "Path=/auth/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_7_FILTERS_0
+              value: "PrefixPath=/api"
+          resources:
+            requests:
+              cpu: 150m
+              memory: 200Mi
+            limits:
+              cpu: 300m
+              memory: 400Mi
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 80
+            initialDelaySeconds: 300
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 80
+            initialDelaySeconds: 300
+            periodSeconds: 5

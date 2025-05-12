@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+  labels:
+    app.kubernetes.io/name: order
+    app.kubernetes.io/instance: order-service # Using service name as instance name
+    app.kubernetes.io/managed-by: manual # Indicating manual management
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8084
+      targetPort: 8084
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: order
+    app.kubernetes.io/instance: order-service
