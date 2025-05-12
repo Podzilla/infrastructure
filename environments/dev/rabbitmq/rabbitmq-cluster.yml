@@ -4,6 +4,9 @@ metadata:
   name: my-rabbitmq
   namespace: dev
 spec:
+  secretBackend:
+    externalSecret:
+      name: rabbitmq-secrets
   replicas: 1
   resources:
     requests:
@@ -30,6 +33,3 @@ spec:
                   - name: rabbitmq-definitions
                     mountPath: /etc/rabbitmq-definitions
                     readOnly: true
-                envFrom:
-                  - secretRef:
-                      name: rabbitmq-secrets
