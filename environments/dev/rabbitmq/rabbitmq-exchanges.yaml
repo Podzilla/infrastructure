@@ -1,0 +1,44 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: Exchange
+metadata:
+  name: user-exchange # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  name: user_exchange # The actual name of the exchange in RabbitMQ
+  vhost: / # The vhost name
+  type: topic # The exchange type
+  durable: true # Is durable?
+  # autoDelete: false # Optional: defaults to false
+  # arguments: {} # Optional: add exchange arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Exchange
+metadata:
+  name: inventory-exchange # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  name: inventory_exchange # The actual name of the exchange in RabbitMQ
+  vhost: / # The vhost name
+  type: topic # The exchange type
+  durable: true # Is durable?
+  # autoDelete: false # Optional: defaults to false
+  # arguments: {} # Optional: add exchange arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Exchange
+metadata:
+  name: order-exchange # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  name: order_exchange # The actual name of the exchange in RabbitMQ
+  vhost: / # The vhost name
+  type: topic # The exchange type
+  durable: true # Is durable?
+  # autoDelete: false # Optional: defaults to false
+  # arguments: {} # Optional: add exchange arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name

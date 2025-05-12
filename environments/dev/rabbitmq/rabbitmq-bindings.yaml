@@ -1,0 +1,284 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: user-analytics-courier-registered-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: user_exchange # The name of the source exchange
+  destination: analytics_user_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: courier.registered # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: user-analytics-customer-registered-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: user_exchange # The name of the source exchange
+  destination: analytics_user_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: customer.registered # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: inventory-analytics-product-created-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: inventory_exchange # The name of the source exchange
+  destination: analytics_inventory_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: product.created # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: inventory-analytics-inventory-updated-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: inventory_exchange # The name of the source exchange
+  destination: analytics_inventory_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: inventory.updated # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: order-analytics-cart-checkedout-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: order_exchange # The name of the source exchange
+  destination: analytics_order_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: cart.checkedout # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: order-analytics-order-star-binding # Unique name for this CR (using 'star' to represent '*')
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: order_exchange # The name of the source exchange
+  destination: analytics_order_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: order.* # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: order-order-cart-checkedout-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: order_exchange # The name of the source exchange
+  destination: order_order_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: cart.checkedout # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: order-order-packaged-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: order_exchange # The name of the source exchange
+  destination: order_order_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: order.packaged # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: order-order-shipped-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: order_exchange # The name of the source exchange
+  destination: order_order_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: order.shipped # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: order-order-delivered-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: order_exchange # The name of the source exchange
+  destination: order_order_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: order.delivered # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: order-order-failed-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: order_exchange # The name of the source exchange
+  destination: order_order_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: order.failed # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: order-warehouse-placed-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: order_exchange # The name of the source exchange
+  destination: warehouse_order_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: order.placed # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: order-warehouse-cancelled-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: order_exchange # The name of the source exchange
+  destination: warehouse_order_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: order.cancelled # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: order-warehouse-assigned-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: order_exchange # The name of the source exchange
+  destination: warehouse_order_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: order.assigned_to_courier # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: order-courier-packaged-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: order_exchange # The name of the source exchange
+  destination: courier_order_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: order.packaged # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: order-courier-assigned-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: order_exchange # The name of the source exchange
+  destination: courier_order_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: order.assigned_to_courier # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: order-courier-shipped-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: order_exchange # The name of the source exchange
+  destination: courier_order_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: order.shipped # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: order-courier-delivered-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: order_exchange # The name of the source exchange
+  destination: courier_order_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: order.delivered # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: order-courier-failed-binding # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: order_exchange # The name of the source exchange
+  destination: courier_order_event_queue # The name of the destination queue or exchange
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: order.failed # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
