@@ -8,6 +8,8 @@ kubectl create secret generic auth-secrets `
   --from-literal=SPRING_DATASOURCE_PASSWORD="$env:AUTH_DB_PASSWORD" `
   --from-literal=AUTH_DB_NAME="$env:AUTH_DB_NAME" `
   --from-literal=SECRET_KEY="$env:AUTH_SECRET_KEY" `
+  --from-literal=SPRING_RABBITMQ_USERNAME="$env:RABBITMQ_DEFAULT_USER" `
+  --from-literal=SPRING_RABBITMQ_PASSWORD="$env:RABBITMQ_DEFAULT_PASS" `
   --namespace=dev `
   --dry-run=client -o yaml |
 kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/auth-sealed-secret.yaml
@@ -17,6 +19,8 @@ kubectl create secret generic erp-secrets `
   --from-literal=SPRING_DATASOURCE_USERNAME="$env:ERP_DB_USERNAME" `
   --from-literal=SPRING_DATASOURCE_PASSWORD="$env:ERP_DB_PASSWORD" `
   --from-literal=ERP_DB_NAME="$env:ERP_DB_NAME" `
+  --from-literal=SPRING_RABBITMQ_USERNAME="$env:RABBITMQ_DEFAULT_USER" `
+  --from-literal=SPRING_RABBITMQ_PASSWORD="$env:RABBITMQ_DEFAULT_PASS" `
   --namespace=dev `
   --dry-run=client -o yaml |
 kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/erp-sealed-secret.yaml
@@ -26,6 +30,8 @@ kubectl create secret generic order-secrets `
   --from-literal=SPRING_DATASOURCE_USERNAME="$env:ORDER_DB_USERNAME" `
   --from-literal=SPRING_DATASOURCE_PASSWORD="$env:ORDER_DB_PASSWORD" `
   --from-literal=ORDER_DB_NAME="$env:ORDER_DB_NAME" `
+  --from-literal=SPRING_RABBITMQ_USERNAME="$env:RABBITMQ_DEFAULT_USER" `
+  --from-literal=SPRING_RABBITMQ_PASSWORD="$env:RABBITMQ_DEFAULT_PASS" `
   --namespace=dev `
   --dry-run=client -o yaml |
 kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/order-sealed-secret.yaml
@@ -35,6 +41,8 @@ kubectl create secret generic warehouse-secrets `
   --from-literal=SPRING_DATASOURCE_USERNAME="$env:WAREHOUSE_DB_USERNAME" `
   --from-literal=SPRING_DATASOURCE_PASSWORD="$env:WAREHOUSE_DB_PASSWORD" `
   --from-literal=WAREHOUSE_DB_NAME="$env:WAREHOUSE_DB_NAME" `
+  --from-literal=SPRING_RABBITMQ_USERNAME="$env:RABBITMQ_DEFAULT_USER" `
+  --from-literal=SPRING_RABBITMQ_PASSWORD="$env:RABBITMQ_DEFAULT_PASS" `
   --namespace=dev `
   --dry-run=client -o yaml |
 kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/warehouse-sealed-secret.yaml
@@ -44,6 +52,8 @@ kubectl create secret generic cart-secrets `
   --from-literal=SPRING_DATA_MONGODB_USERNAME="$env:CART_MONGO_USERNAME" `
   --from-literal=SPRING_DATA_MONGODB_PASSWORD="$env:CART_MONGO_PASSWORD" `
   --from-literal=CART_DB_NAME="$env:CART_DB_NAME" `
+  --from-literal=SPRING_RABBITMQ_USERNAME="$env:RABBITMQ_DEFAULT_USER" `
+  --from-literal=SPRING_RABBITMQ_PASSWORD="$env:RABBITMQ_DEFAULT_PASS" `
   --namespace=dev `
   --dry-run=client -o yaml |
 kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/cart-sealed-secret.yaml
@@ -53,6 +63,8 @@ kubectl create secret generic courier-secrets `
   --from-literal=SPRING_DATA_MONGODB_USERNAME="$env:COURIER_MONGO_USERNAME" `
   --from-literal=SPRING_DATA_MONGODB_PASSWORD="$env:COURIER_MONGO_PASSWORD" `
   --from-literal=COURIER_DB_NAME="$env:COURIER_DB_NAME" `
+  --from-literal=SPRING_RABBITMQ_USERNAME="$env:RABBITMQ_DEFAULT_USER" `
+  --from-literal=SPRING_RABBITMQ_PASSWORD="$env:RABBITMQ_DEFAULT_PASS" `
   --namespace=dev `
   --dry-run=client -o yaml |
 kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/courier-sealed-secret.yaml

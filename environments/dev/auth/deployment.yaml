@@ -31,6 +31,10 @@ spec:
               value: redis-service
             - name: SERVER_PORT
               value: "8086"
+            - name: SPRING_RABBITMQ_HOST
+              value: my-rabbitmq
+            - name: SPRING_RABBITMQ_PORT
+              value: "5672"
           envFrom:
             - secretRef:
                 name: auth-secrets

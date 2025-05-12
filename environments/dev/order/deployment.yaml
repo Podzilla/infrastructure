@@ -27,6 +27,10 @@ spec:
           env:
             - name: SPRING_DATASOURCE_URL
               value: jdbc:postgresql://psql-order-service:5434/$(ORDER_DB_NAME)
+            - name: SPRING_RABBITMQ_HOST
+              value: my-rabbitmq
+            - name: SPRING_RABBITMQ_PORT
+              value: "5672"
           envFrom:
             - secretRef:
                 name: order-secrets
