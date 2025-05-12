@@ -1,5 +1,5 @@
 apiVersion: rabbitmq.com/v1beta1
-kind: RabbitmqExchange
+kind: Exchange
 metadata:
   name: user-exchange
   namespace: dev
@@ -12,7 +12,7 @@ spec:
   durable: true
 ---
 apiVersion: rabbitmq.com/v1beta1
-kind: RabbitmqExchange
+kind: Exchange
 metadata:
   name: inventory-exchange
   namespace: dev
@@ -25,7 +25,7 @@ spec:
   durable: true
 ---
 apiVersion: rabbitmq.com/v1beta1
-kind: RabbitmqExchange
+kind: Exchange
 metadata:
   name: order-exchange
   namespace: dev

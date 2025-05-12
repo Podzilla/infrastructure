@@ -1,5 +1,5 @@
 apiVersion: rabbitmq.com/v1beta1
-kind: RabbitmqQueue
+kind: Queue
 metadata:
   name: analytics-user-event-queue
   namespace: dev
@@ -11,7 +11,7 @@ spec:
   durable: true
 ---
 apiVersion: rabbitmq.com/v1beta1
-kind: RabbitmqQueue
+kind: Queue
 metadata:
   name: analytics-order-event-queue
   namespace: dev
@@ -23,7 +23,7 @@ spec:
   durable: true
 ---
 apiVersion: rabbitmq.com/v1beta1
-kind: RabbitmqQueue
+kind: Queue
 metadata:
   name: analytics-inventory-event-queue
   namespace: dev
@@ -35,7 +35,7 @@ spec:
   durable: true
 ---
 apiVersion: rabbitmq.com/v1beta1
-kind: RabbitmqQueue
+kind: Queue
 metadata:
   name: order-order-event-queue
   namespace: dev
@@ -47,7 +47,7 @@ spec:
   durable: true
 ---
 apiVersion: rabbitmq.com/v1beta1
-kind: RabbitmqQueue
+kind: Queue
 metadata:
   name: warehouse-order-event-queue
   namespace: dev
@@ -59,7 +59,7 @@ spec:
   durable: true
 ---
 apiVersion: rabbitmq.com/v1beta1
-kind: RabbitmqQueue
+kind: Queue
 metadata:
   name: courier-order-event-queue
   namespace: dev
