@@ -26,7 +26,7 @@ spec:
             - containerPort: 8082
           env:
             - name: SPRING_DATA_MONGODB_URI
-              value: mongodb://mongo-db:27017/courierDB
+              value: mongodb://mongo-courier-service:27018/$(COURIER_DB_NAME)
           envFrom:
             - secretRef:
                 name: courier-secrets

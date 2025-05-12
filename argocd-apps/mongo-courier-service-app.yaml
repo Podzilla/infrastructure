@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mongo
+  name: mongo-courier
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/Podzilla/infrastructure
     targetRevision: main
-    path: environments/dev/mongo
+    path: environments/dev/mongo-courier
   destination:
     server: https://kubernetes.default.svc
     namespace: dev

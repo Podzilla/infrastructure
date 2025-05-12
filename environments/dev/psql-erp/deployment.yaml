@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: psql-erp
+  namespace: dev
+  labels:
+    app: psql-erp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: psql-erp
+  template:
+    metadata:
+      labels:
+        app: psql-erp
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:14.17
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: psql-erp-secrets
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: psql-erp-pvc

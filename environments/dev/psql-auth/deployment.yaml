@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: psql
+  name: psql-auth
   namespace: dev
   labels:
-    app: psql
+    app: psql-auth
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: psql
+      app: psql-auth
   template:
     metadata:
       labels:
-        app: psql
+        app: psql-auth
     spec:
       containers:
         - name: postgres
@@ -22,11 +22,11 @@ spec:
             - containerPort: 5432
           envFrom:
             - secretRef:
-                name: psql-secrets
+                name: psql-auth-secrets
           volumeMounts:
             - name: data
               mountPath: /var/lib/postgresql/data
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: psql-pvc
+            claimName: psql-auth-pvc

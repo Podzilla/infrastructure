@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-courier
+  namespace: dev
+  labels:
+    app: mongo-courier
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-courier
+  template:
+    metadata:
+      labels:
+        app: mongo-courier
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:8.0.9
+          ports:
+            - containerPort: 27017
+          envFrom:
+            - secretRef:
+                name: mongo-courier-secrets
+          volumeMounts:
+            - name: data
+              mountPath: /data/db
+          resources:
+            requests:
+              cpu: 150m
+              memory: 200Mi
+            limits:
+              cpu: 300m
+              memory: 400Mi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: mongo-courier-pvc

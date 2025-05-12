@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongo
+  name: mongo-cart
   namespace: dev
   labels:
-    app: mongo
+    app: mongo-cart
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mongo
+      app: mongo-cart
   template:
     metadata:
       labels:
-        app: mongo
+        app: mongo-cart
     spec:
       containers:
         - name: mongo
@@ -22,7 +22,7 @@ spec:
             - containerPort: 27017
           envFrom:
             - secretRef:
-                name: mongo-secrets
+                name: mongo-cart-secrets
           volumeMounts:
             - name: data
               mountPath: /data/db
@@ -36,4 +36,4 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: mongo-pvc
+            claimName: mongo-cart-pvc

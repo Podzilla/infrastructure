@@ -26,7 +26,7 @@ spec:
             - containerPort: 8083
           env:
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://psql-db:5432/erpDB
+              value: jdbc:postgresql://psql-erp-service:5433/$(ERP_DB_NAME)
           envFrom:
             - secretRef:
                 name: erp-secrets

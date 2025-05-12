@@ -26,7 +26,7 @@ spec:
             - containerPort: 8086
           env:
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://psql-service:5432/authDB
+              value: jdbc:postgresql://psql-auth-service:5432/$(AUTH_DB_NAME)
             - name: SPRING_DATA_REDIS_HOST
               value: redis-service
             - name: SERVER_PORT

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: psql-order
+  namespace: dev
+  labels:
+    app: psql-order
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: psql-order
+  template:
+    metadata:
+      labels:
+        app: psql-order
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:14.17
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: psql-order-secrets
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: psql-order-pvc

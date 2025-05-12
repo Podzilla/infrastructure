@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: psql-warehouse
+  namespace: dev
+  labels:
+    app: psql-warehouse
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: psql-warehouse
+  template:
+    metadata:
+      labels:
+        app: psql-warehouse
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:14.17
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: psql-warehouse-secrets
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: psql-warehouse-pvc

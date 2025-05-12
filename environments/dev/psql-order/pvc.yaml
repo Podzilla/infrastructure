@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: psql-pvc
+  name: psql-order-pvc
   namespace: dev
   labels:
-    app: psql
+    app: psql-order
 spec:
   accessModes:
     - ReadWriteOnce

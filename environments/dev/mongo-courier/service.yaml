@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongo
+  name: mongo-courier-service
   namespace: dev
   labels:
-    app: mongo
+    app: mongo-courier
 spec:
   type: ClusterIP
   ports:
-    - port: 27017
+    - port: 27018
       targetPort: 27017
       protocol: TCP
       name: mongo
   selector:
-    app: mongo
+    app: mongo-courier

@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: psql-service
+  name: mongo-cart-service
   namespace: dev
   labels:
-    app: psql
+    app: mongo-cart
 spec:
   type: ClusterIP
   ports:
-    - port: 5432
-      targetPort: 5432
+    - port: 27017
+      targetPort: 27017
       protocol: TCP
-      name: postgres
+      name: mongo
   selector:
-    app: psql
+    app: mongo-cart

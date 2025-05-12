@@ -26,7 +26,7 @@ spec:
             - containerPort: 8081
           env:
             - name: SPRING_DATA_MONGODB_URI
-              value: mongodb://mongo-db:27017/courierDB
+              value: mongodb://mongo-cart-service:27017/$(CART_DB_NAME)
           envFrom:
             - secretRef:
                 name: cart-secrets

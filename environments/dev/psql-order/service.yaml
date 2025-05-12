@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: psql-order-service
+  namespace: dev
+  labels:
+    app: psql-order
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5434
+      targetPort: 5432
+      protocol: TCP
+      name: postgres
+  selector:
+    app: psql-order
