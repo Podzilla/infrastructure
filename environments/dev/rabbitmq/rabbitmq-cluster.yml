@@ -30,3 +30,6 @@ spec:
                   - name: rabbitmq-definitions
                     mountPath: /etc/rabbitmq-definitions
                     readOnly: true
+                envFrom:
+                  - secretRef:
+                      name: rabbitmq-secrets

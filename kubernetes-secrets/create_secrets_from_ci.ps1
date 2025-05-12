@@ -104,7 +104,12 @@ kubectl create secret generic psql-warehouse-secrets `
     --dry-run=client -o yaml |
 kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/psql-warehouse-sealed-secret.yaml
 
-
+kubectl create secret generic rabbitmq-secrets `
+  --from-literal=RABBITMQ_DEFAULT_USER="$env:RABBITMQ_DEFAULT_USER" `
+  --from-literal=RABBITMQ_DEFAULT_PASS="$env:RABBITMQ_DEFAULT_PASS" `
+  --namespace=dev `
+  --dry-run=client -o yaml |
+kubeseal --format yaml --cert kubeseal-cert.pem > kubernetes-secrets/rabbitmq-sealed-secret.yaml
 
 kubectl apply -f kubernetes-secrets/auth-sealed-secret.yaml
 kubectl apply -f kubernetes-secrets/erp-sealed-secret.yaml
@@ -118,3 +123,4 @@ kubectl apply -f kubernetes-secrets/psql-auth-sealed-secret.yaml
 kubectl apply -f kubernetes-secrets/psql-erp-sealed-secret.yaml
 kubectl apply -f kubernetes-secrets/psql-order-sealed-secret.yaml
 kubectl apply -f kubernetes-secrets/psql-warehouse-sealed-secret.yaml
+kubectl apply -f kubernetes-secrets/rabbitmq-sealed-secret.yaml
