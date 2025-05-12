@@ -26,7 +26,7 @@ spec:
             - containerPort: 8081
           env:
             - name: SPRING_DATA_MONGODB_URI
-              value: mongodb://mongo-cart-service:27017/$(CART_DB_NAME)
+              value: mongodb://$(SPRING_DATA_MONGODB_USERNAME):$(SPRING_DATA_MONGODB_PASSWORD)@mongo-cart-service:27017/$(CART_DB_NAME)?authSource=admin
             - name: SPRING_RABBITMQ_HOST
               value: my-rabbitmq
             - name: SPRING_RABBITMQ_PORT
