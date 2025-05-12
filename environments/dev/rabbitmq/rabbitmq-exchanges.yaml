@@ -1,0 +1,38 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqExchange
+metadata:
+  name: user-exchange
+  namespace: dev
+  labels:
+    rabbitmq.com/cluster: my-rabbitmq
+spec:
+  name: user_exchange
+  vhost: /
+  type: topic
+  durable: true
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqExchange
+metadata:
+  name: inventory-exchange
+  namespace: dev
+  labels:
+    rabbitmq.com/cluster: my-rabbitmq
+spec:
+  name: inventory_exchange
+  vhost: /
+  type: topic
+  durable: true
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqExchange
+metadata:
+  name: order-exchange
+  namespace: dev
+  labels:
+    rabbitmq.com/cluster: my-rabbitmq
+spec:
+  name: order_exchange
+  vhost: /
+  type: topic
+  durable: true

@@ -1,0 +1,71 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqQueue
+metadata:
+  name: analytics-user-event-queue
+  namespace: dev
+  labels:
+    rabbitmq.com/cluster: my-rabbitmq
+spec:
+  name: analytics_user_event_queue
+  vhost: /
+  durable: true
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqQueue
+metadata:
+  name: analytics-order-event-queue
+  namespace: dev
+  labels:
+    rabbitmq.com/cluster: my-rabbitmq
+spec:
+  name: analytics_order_event_queue
+  vhost: /
+  durable: true
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqQueue
+metadata:
+  name: analytics-inventory-event-queue
+  namespace: dev
+  labels:
+    rabbitmq.com/cluster: my-rabbitmq
+spec:
+  name: analytics_inventory_event_queue
+  vhost: /
+  durable: true
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqQueue
+metadata:
+  name: order-order-event-queue
+  namespace: dev
+  labels:
+    rabbitmq.com/cluster: my-rabbitmq
+spec:
+  name: order_order_event_queue
+  vhost: /
+  durable: true
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqQueue
+metadata:
+  name: warehouse-order-event-queue
+  namespace: dev
+  labels:
+    rabbitmq.com/cluster: my-rabbitmq
+spec:
+  name: warehouse_order_event_queue
+  vhost: /
+  durable: true
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqQueue
+metadata:
+  name: courier-order-event-queue
+  namespace: dev
+  labels:
+    rabbitmq.com/cluster: my-rabbitmq
+spec:
+  name: courier_order_event_queue
+  vhost: /
+  durable: true
