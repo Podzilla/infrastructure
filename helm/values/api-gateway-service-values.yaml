@@ -35,6 +35,9 @@ env:
   - name: SPRING_APPLICATION_NAME
     value: "api-gateway"
 
+  - name: SPRING_MAIN_WEB_APPLICATION_TYPE
+    value: "reactive"
+
   # spring.cloud.gateway.routes[0] = courier-route
   - name: SPRING_CLOUD_GATEWAY_ROUTES_0_ID
     value: "courier-route"
