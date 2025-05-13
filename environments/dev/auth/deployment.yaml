@@ -52,10 +52,10 @@ spec:
               path: /api/actuator/health
               port: 8086
             initialDelaySeconds: 300
-            periodSeconds: 10
+            periodSeconds: 30
           readinessProbe:
             httpGet:
               path: /api/actuator/health
               port: 8086
             initialDelaySeconds: 300
-            periodSeconds: 5
+            periodSeconds: 30

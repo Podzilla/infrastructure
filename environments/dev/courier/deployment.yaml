@@ -50,10 +50,10 @@ spec:
               path: /api/actuator/health
               port: 8082
             initialDelaySeconds: 300
-            periodSeconds: 10
+            periodSeconds: 30
           readinessProbe:
             httpGet:
               path: /api/actuator/health
               port: 8082
             initialDelaySeconds: 300
-            periodSeconds: 5
+            periodSeconds: 30
