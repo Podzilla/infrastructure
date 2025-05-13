@@ -1,37 +1,95 @@
-# Microservices Kubernetes Infrastructure
+# Infrastructure Setup Guide
 
-This repository contains the Kubernetes configurations for deploying microservices.
-
-## Structure
-
-- `helm/charts/spring-boot-microservice/`: A reusable Helm chart for deploying standard Spring Boot microservices.
-- `helm/values/`: Service-specific `values.yaml` files used to configure the Helm chart for each microservice.
-- `kubernetes-secrets/`: Documentation and scripts related to securely managing Kubernetes Secrets (plaintext secrets are NOT stored here).
-- `kubernetes-gateway/`: Kubernetes manifests related to external access, such as the API Gateway Ingress.
+This guide outlines the steps to set up the core infrastructure components in a Kubernetes cluster, including Argo CD, RabbitMQ, Ingress, and Sealed Secrets.
 
 ## Prerequisites
 
-1.  A running Kubernetes cluster.
-2.  `kubectl` configured to connect to your cluster.
-3.  Helm v3+ installed.
-4.  An Ingress Controller installed in your cluster (e.g., Nginx Ingress Controller, Traefik, cloud provider default).
-5.  Microservice Docker images built and pushed to a container registry accessible by your cluster.
-6.  Kubernetes Secrets created securely in your cluster for each microservice (see `kubernetes-secrets/README.md`).
+* Access to a Kubernetes cluster.
+* `kubectl` installed and configured to connect to your cluster.
+* PowerShell (for running the `create_secrets_from_ci.ps1` script).
 
-## Workflow
+## Installation Steps
 
-1.  **Build & Push Microservice Images:** Ensure your microservice CI pipelines build and push updated Docker images to your container registry (e.g., `your-registry/auth-backend:v1.0.0`).
-2.  **Manage Kubernetes Secrets:** Create or update the necessary Kubernetes Secret resources in your cluster. **Do not commit plaintext secrets to this repository.** Refer to `kubernetes-secrets/README.md` for guidance.
-3.  **Deploy/Update Microservices:** Use Helm to deploy or update individual microservices using the common chart and service-specific values.
-4.  **Apply API Gateway Ingress:** Apply the Ingress manifest to expose your services externally via the API Gateway.
+1.  **Open Kubernetes:** Ensure you have access to your Kubernetes cluster.
 
-## Deploying a Microservice
+2.  **Create Development Namespace:**
+    ```bash
+    kubectl create namespace dev
+    ```
 
-Use the Helm chart with the corresponding service values file. Replace `auth-service` and `-f ./helm/values/auth-service-values.yaml` with the actual service name and file path.
+3.  **Install Argo CD:**
+    * Create the `argocd` namespace:
+        ```bash
+        kubectl create namespace argocd
+        ```
+    * Apply the Argo CD installation manifests:
+        ```bash
+        kubectl apply -n argocd -f [https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml](https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml)
+        ```
+    [cite: 1]
 
-```bash
-# To install a new service (first time)
-helm install auth-service ./helm/charts/spring-boot-microservice -f ./helm/values/auth-service-values.yaml --create-namespace --namespace your-microservices-namespace
+4.  **Install RabbitMQ:**
+    * Install cert-manager:
+        ```bash
+        kubectl apply -f [https://github.com/cert-manager/cert-manager/releases/download/v1.13.1/cert-manager.yaml](https://github.com/cert-manager/cert-manager/releases/download/v1.13.1/cert-manager.yaml)
+        ```
+    * Install the RabbitMQ Messaging Topology Operator:
+        ```bash
+        kubectl apply -f [https://github.com/rabbitmq/messaging-topology-operator/releases/latest/download/messaging-topology-operator-with-certmanager.yaml](https://github.com/rabbitmq/messaging-topology-operator/releases/latest/download/messaging-topology-operator-with-certmanager.yaml)
+        ```
+    * Install the RabbitMQ Cluster Operator:
+        ```bash
+        kubectl apply -f [https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml](https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml)
+        ```
+    [cite: 1]
 
-# To upgrade an existing service deployment
-helm upgrade auth-service ./helm/charts/spring-boot-microservice -f ./helm/values/auth-service-values.yaml --namespace your-microservices-namespace
+5.  **Install Ingress (NGINX Controller):**
+    ```bash
+    kubectl apply -f [https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/cloud/deploy.yaml](https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/cloud/deploy.yaml)
+    ```
+    [cite: 1]
+
+6.  **Install Sealed Secrets:**
+    * Apply the Sealed Secrets controller manifest:
+        ```bash
+        kubectl apply -f [https://github.com/bitnami-labs/sealed-secrets/releases/latest/download/controller.yaml](https://github.com/bitnami-labs/sealed-secrets/releases/latest/download/controller.yaml)
+        ```
+    * Fetch the kubeseal certificate:
+        ```bash
+        kubeseal --fetch-cert --controller-name=sealed-secrets-controller --controller-namespace=kube-system -w kubeseal-cert.pem
+        ```
+    [cite: 1]
+
+7.  **Set Environment Variables Locally:** Set the necessary environment variables on your local machine. (Note: Specific environment variables are not detailed in the provided steps, you may want to add more information here). [cite: 1]
+
+8.  **Create Secrets from CI:** Run the PowerShell script to create secrets:
+    ```bash
+    .\kubernetes-secrets\create_secrets_from_ci.ps1
+    ```
+    [cite: 1]
+
+9.  **Apply Argo CD Applications:**
+    ```bash
+    kubectl apply -f argocd-apps/
+    ```
+    [cite: 1]
+
+## Accessing Argo CD
+
+1.  **Port Forward the Argo CD Server:**
+    ```bash
+    kubectl port-forward svc/argocd-server -n argocd 8080:443
+    ```
+    [cite: 1]
+
+2.  **Access in Browser:** Open your web browser and go to `https://localhost:8080`. [cite: 1]
+
+3.  **Get Initial Admin Password:**
+    ```bash
+    kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | % { [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($_)) }
+    ```
+    [cite: 2]
+
+4.  **Login:** Login with the username `admin` and the retrieved password. [cite: 2]
+
+This README provides a clear overview and step-by-step instructions for setting up your infrastructure components. You can further enhance it by adding sections on configuration, troubleshooting, and specific details about the applications managed by Argo CD.
