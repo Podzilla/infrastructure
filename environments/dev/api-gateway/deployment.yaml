@@ -91,6 +91,54 @@ spec:
               value: "http://auth-service:8086"
             - name: SPRING_CLOUD_GATEWAY_ROUTES_7_PREDICATES_0
               value: "Path=/api/auth/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_8_ID
+              value: "courier-analytics-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_8_URI
+              value: "http://erp-service:8083"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_8_PREDICATES_0
+              value: "Path=/api/courier-analytics/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_9_ID
+              value: "customer-analytics-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_9_URI
+              value: "http://erp-service:8083"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_9_PREDICATES_0
+              value: "Path=/api/customer-analytics/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_10_ID
+              value: "fulfillment-analytics-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_10_URI
+              value: "http://erp-service:8083"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_10_PREDICATES_0
+              value: "Path=/api/fulfillment-analytics/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_11_ID
+              value: "inventory-analytics-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_11_URI
+              value: "http://erp-service:8083"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_11_PREDICATES_0
+              value: "Path=/api/inventory-analytics/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_12_ID
+              value: "order-analytics-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_12_URI
+              value: "http://erp-service:8083"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_12_PREDICATES_0
+              value: "Path=/api/order-analytics/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_13_ID
+              value: "product-analytics-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_13_URI
+              value: "http://erp-service:8083"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_13_PREDICATES_0
+              value: "Path=/api/product-analytics/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_14_ID
+              value: "profit-analytics-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_14_URI
+              value: "http://erp-service:8083"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_14_PREDICATES_0
+              value: "Path=/api/profit-analytics/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_15_ID
+              value: "revenue-analytics-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_15_URI
+              value: "http://erp-service:8083"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_15_PREDICATES_0
+              value: "Path=/api/revenue-analytics/**"
           resources:
             requests:
               cpu: 150m
