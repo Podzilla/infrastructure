@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: "nourwk/api-gateway:v1.0.3"
+          image: "nourwk/api-gateway:v1.0.4"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
@@ -84,7 +84,7 @@ spec:
             - name: SPRING_CLOUD_GATEWAY_ROUTES_6_URI
               value: "http://auth-service:8086"
             - name: SPRING_CLOUD_GATEWAY_ROUTES_6_PREDICATES_0
-              value: "Path=/api/admins/**"
+              value: "Path=/api/admin/**"
             - name: SPRING_CLOUD_GATEWAY_ROUTES_7_ID
               value: "auth-route"
             - name: SPRING_CLOUD_GATEWAY_ROUTES_7_URI
