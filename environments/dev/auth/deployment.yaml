@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: "nourwk/auth:v1.0.6"
+          image: "nourwk/auth:v1.0.7"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8086
