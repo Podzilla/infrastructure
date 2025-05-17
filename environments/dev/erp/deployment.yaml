@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: erp
-          image: "nourwk/erp:v1.0.1"
+          image: "nourwk/erp:v1.0.5"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8083
