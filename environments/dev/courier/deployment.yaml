@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: courier
-          image: "nourwk/courier:v1.0.5"
+          image: "nourwk/courier:v1.0.6"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8082
