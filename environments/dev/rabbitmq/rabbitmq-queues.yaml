@@ -61,6 +61,21 @@ spec:
 apiVersion: rabbitmq.com/v1beta1
 kind: Queue
 metadata:
+  name: order-inventory-event-queue # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  name: order_inventory_event_queue # The actual name of the queue in RabbitMQ
+  vhost: / # The vhost name
+  durable: true # Is durable?
+  # autoDelete: false # Optional: defaults to false
+  # arguments: {} # Optional: add queue arguments if needed
+  # node: rabbit@my-rabbitmq-server-0 # Optional: Pin to a specific node (use caution)
+  rabbitmqClusterReference:
+      name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Queue
+metadata:
   name: warehouse-order-event-queue # Unique name for this CR
   namespace: dev # Must match your RabbitmqCluster namespace
 spec:
@@ -72,6 +87,36 @@ spec:
   # node: rabbit@my-rabbitmq-server-0 # Optional: Pin to a specific node (use caution)
   rabbitmqClusterReference:
     name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Queue
+metadata:
+  name: warehouse-inventory-event-queue # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  name: warehouse_inventory_event_queue # The actual name of the queue in RabbitMQ
+  vhost: / # The vhost name
+  durable: true # Is durable?
+  # autoDelete: false # Optional: defaults to false
+  # arguments: {} # Optional: add queue arguments if needed
+  # node: rabbit@my-rabbitmq-server-0 # Optional: Pin to a specific node (use caution)
+  rabbitmqClusterReference:
+      name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Queue
+metadata:
+  name: courier-user-event-queue # Unique name for this CR
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  name: courier_user_event_queue # The actual name of the queue in RabbitMQ
+  vhost: / # The vhost name
+  durable: true # Is durable?
+  # autoDelete: false # Optional: defaults to false
+  # arguments: {} # Optional: add queue arguments if needed
+  # node: rabbit@my-rabbitmq-server-0 # Optional: Pin to a specific node (use caution)
+  rabbitmqClusterReference:
+      name: my-rabbitmq # Link to your RabbitmqCluster resource name
 ---
 apiVersion: rabbitmq.com/v1beta1
 kind: Queue
