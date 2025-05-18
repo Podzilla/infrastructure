@@ -139,6 +139,18 @@ spec:
               value: "http://erp-service:8083"
             - name: SPRING_CLOUD_GATEWAY_ROUTES_15_PREDICATES_0
               value: "Path=/api/revenue-analytics/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_16_ID
+              value: "warehouse-stock-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_16_URI
+              value: "http://warehouse-service:8085"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_16_PREDICATES_0
+              value: "Path=/api/stock/**"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_17_ID
+              value: "warehouse-assign-route"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_17_URI
+              value: "http://warehouse-service:8085"
+            - name: SPRING_CLOUD_GATEWAY_ROUTES_17_PREDICATES_0
+              value: "Path=/api/assign/**"
           resources:
             requests:
               cpu: 150m
