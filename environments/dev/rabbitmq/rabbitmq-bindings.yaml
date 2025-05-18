@@ -17,11 +17,26 @@ spec:
 apiVersion: rabbitmq.com/v1beta1
 kind: Binding
 metadata:
-  name: user-courier-courier-registered-binding # Unique name for this CR (Renamed for clarity)
+  name: user-analytics-courier-registered-binding # Unique name for this CR (Missing binding from previous K8s list)
   namespace: dev # Must match your RabbitmqCluster namespace
 spec:
   source: user_exchange # The name of the source exchange
-  destination: courier_user_event_queue # The name of the destination queue (Corrected destination)
+  destination: analytics_user_event_queue # The name of the destination queue (Matches local setup)
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: courier.registered # The routing key (matches local setup)
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: user-courier-courier-registered-binding # Unique name for this CR (Matches local setup)
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: user_exchange # The name of the source exchange
+  destination: courier_user_event_queue # The name of the destination queue (Matches local setup)
   destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
   routingKey: courier.registered # The routing key (matches local setup)
   vhost: / # The vhost name
