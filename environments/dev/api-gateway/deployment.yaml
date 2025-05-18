@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: "nourwk/api-gateway:v1.0.6"
+          image: "nourwk/api-gateway:v1.0.7"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
