@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: warehouse
-          image: "nourwk/warehouse:v1.0.1"
+          image: "nourwk/warehouse:v1.0.2"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8085
