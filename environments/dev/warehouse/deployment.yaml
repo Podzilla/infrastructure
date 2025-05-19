@@ -25,12 +25,6 @@ spec:
           ports:
             - containerPort: 8085
           env:
-            - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://psql-warehouse-service:5435/$(WAREHOUSE_DB_NAME)
-            - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
-              value: org.postgresql.Driver
-            - name: SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT
-              value: org.hibernate.dialect.PostgreSQLDialect
             - name: SPRING_RABBITMQ_HOST
               value: my-rabbitmq
             - name: SPRING_RABBITMQ_PORT
@@ -55,11 +49,11 @@ spec:
             httpGet:
               path: /api/actuator/health
               port: 8085
-            initialDelaySeconds: 300
+            initialDelaySeconds: 150
             periodSeconds: 30
           readinessProbe:
             httpGet:
               path: /api/actuator/health
               port: 8085
-            initialDelaySeconds: 300
+            initialDelaySeconds: 150
             periodSeconds: 30
