@@ -17,7 +17,7 @@ spec:
 apiVersion: rabbitmq.com/v1beta1
 kind: Binding
 metadata:
-  name: user-analytics-courier-registered-binding # Unique name for this CR (Missing binding from previous K8s list)
+  name: user-analytics-courier-registered-binding # NEW BINDING: Matches bindCourierRegisteredToAnalyticsUser()
   namespace: dev # Must match your RabbitmqCluster namespace
 spec:
   source: user_exchange # The name of the source exchange
@@ -69,6 +69,21 @@ spec:
   destination: analytics_inventory_event_queue # The name of the destination queue
   destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
   routingKey: inventory.updated # The routing key (matches local setup)
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: inventory-analytics-fulfillment-failed-binding # NEW BINDING: Matches bindWarehouseOrderFulfillmentFailedToAnalyticsInventory()
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: inventory_exchange # The name of the source exchange
+  destination: analytics_inventory_event_queue # The name of the destination queue
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: warehouse.order_fulfillment_failed # The routing key
   vhost: / # The vhost name
   # arguments: {} # Optional: add binding arguments if needed
   rabbitmqClusterReference:
@@ -287,7 +302,22 @@ spec:
 apiVersion: rabbitmq.com/v1beta1
 kind: Binding
 metadata:
-  name: order-warehouse-placed-binding # Unique name for this CR
+  name: order-order-delivery-failed-binding # NEW BINDING: Matches bindOrderDeliveryFailedToOrderOrder()
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: order_exchange # The name of the source exchange
+  destination: order_order_event_queue # The name of the destination queue
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: order.delivery_failed # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: order-warehouse-placed-binding
   namespace: dev # Must match your RabbitmqCluster namespace
 spec:
   source: order_exchange # The name of the source exchange
@@ -302,7 +332,22 @@ spec:
 apiVersion: rabbitmq.com/v1beta1
 kind: Binding
 metadata:
-  name: order-warehouse-delivery-failed-binding # Unique name for this CR (matches local setup)
+  name: order-warehouse-cancelled-binding # NEW BINDING: Matches bindOrderCancelledToWarehouseOrder()
+  namespace: dev # Must match your RabbitmqCluster namespace
+spec:
+  source: order_exchange # The name of the source exchange
+  destination: warehouse_order_event_queue # The name of the destination queue
+  destinationType: queue # Must be 'queue' or 'exchange' (camelCase)
+  routingKey: order.cancelled # The routing key
+  vhost: / # The vhost name
+  # arguments: {} # Optional: add binding arguments if needed
+  rabbitmqClusterReference:
+    name: my-rabbitmq # Link to your RabbitmqCluster resource name
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: Binding
+metadata:
+  name: order-warehouse-delivery-failed-binding
   namespace: dev # Must match your RabbitmqCluster namespace
 spec:
   source: order_exchange # The name of the source exchange
@@ -317,7 +362,7 @@ spec:
 apiVersion: rabbitmq.com/v1beta1
 kind: Binding
 metadata:
-  name: order-courier-assigned-binding # Unique name for this CR
+  name: order-courier-assigned-binding
   namespace: dev # Must match your RabbitmqCluster namespace
 spec:
   source: order_exchange # The name of the source exchange

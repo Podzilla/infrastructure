@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: cart
-          image: "nourwk/cart:v1.0.7"
+          image: "ahmadhoseiny/cart:v1.1.1"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8081
