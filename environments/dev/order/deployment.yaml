@@ -35,6 +35,8 @@ spec:
               value: /api
             - name: SERVER_PORT
               value: "8084"
+            - name: API_GATEWAY_URL
+              value: http://courier-service:8082/api/couriers
           envFrom:
             - secretRef:
                 name: order-secrets
